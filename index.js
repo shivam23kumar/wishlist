@@ -7,45 +7,43 @@ function uuid() {
 }
 
 let todoInput = document.querySelector(".input");
-let addTodoButton = document.querySelector(".button");
-let showTodos = document.querySelector(".todos-container");
+let addtodoButton = document.querySelector(".button");
+let showTodos=document.querySelector(".todos-container");
 let todo = "";
 
 let localData = JSON.parse(localStorage.getItem("todos"));
 let todoList = localData || [];
 
-addTodoButton.addEventListener("click", (e) => {
+addtodoButton.addEventListener("click",(e)=>{
     e.preventDefault();
     todo = todoInput.value;
-    if (todo.length > 0) {
+    if(todo.length>0){
         todoList.push({
             todo,
-            id: uuid(),
-            isCompleted: false
-        });
-        renderTodoList(todoList);
+            id:uuid(),
+            isCompleted:false
+        })
+        rendertodoList(todoList);
         localStorage.setItem("todos", JSON.stringify(todoList));
         todoInput.value = "";
+        
     }
-});
-
-showTodos.addEventListener("click", (e) => {
+    
+})
+showTodos.addEventListener("click",(e)=>{
     e.preventDefault();
-    let key = e.target.dataset.key;
-    let delTodoKey = e.target.dataset.todokey;
-    todoList = todoList.map((todo) =>
-        todo.id === key ? {
-            ...todo,
-            isCompleted: !todo.isCompleted
-        } : todo
-    );
-    todoList = todoList.filter((todo) => todo.id !== delTodoKey);
+    let key=e.target.dataset.key;
+    let delkey = e.target.dataset.todokey;
+    todoList = todoList.map(todo=>todo.id===key ? {...todo,isCompleted:!todo.isCompleted}:todo);
+    todoList= todoList.filter(todo=>todo.id !== delkey);
     localStorage.setItem("todos", JSON.stringify(todoList));
     console.log(todoList);
-    renderTodoList(todoList);
-});
+    rendertodoList(todoList);
+})
 
-function renderTodoList(todoList) {
+
+
+function rendertodoList(todoList) {
     showTodos.innerHTML = todoList.map(
         ({
             todo,
@@ -62,4 +60,6 @@ function renderTodoList(todoList) {
     );
 }
 
-renderTodoList(todoList);
+
+
+rendertodoList(todoList);
